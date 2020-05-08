@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Docker基本介绍Docker 是一个开源的应用容器引擎，基于Go 语言 并遵从Apache2.0协议开源。">
+<meta name="keywords" content="DevOps,docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker笔记">
+<meta property="og:url" content="https://uncleqiu.github.io/uncleqiu/2020/04/14/Docker笔记/index.html">
+<meta property="og:site_name" content="Uncle Qiu">
+<meta property="og:description" content="Docker基本介绍Docker 是一个开源的应用容器引擎，基于Go 语言 并遵从Apache2.0协议开源。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-14T15:41:01.531Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker笔记">
+<meta name="twitter:description" content="Docker基本介绍Docker 是一个开源的应用容器引擎，基于Go 语言 并遵从Apache2.0协议开源。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://uncleqiu.github.io/uncleqiu/2020/04/14/Docker笔记/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Docker笔记 | Uncle Qiu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Uncle Qiu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">A lazy programmer's blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://uncleqiu.github.io/uncleqiu/2020/04/14/Docker笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Uncle Qiu">
+      <meta itemprop="description" content="A lazy programmer's blog">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Uncle Qiu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Docker笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-04-14 22:26:34 / Modified: 23:41:01" itemprop="dateCreated datePublished" datetime="2020-04-14T22:26:34+08:00">2020-04-14</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Docker基本介绍"><a href="#Docker基本介绍" class="headerlink" title="Docker基本介绍"></a>Docker基本介绍</h2><p><a href="https://www.docker.com/" target="_blank" rel="noopener">Docker</a> 是一个开源的应用容器引擎，基于<code>Go</code> 语言 并遵从Apache2.0协议开源。<a id="more"></a> Docker可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。</p>
+<h3 id="Docker的应用场景"><a href="#Docker的应用场景" class="headerlink" title="Docker的应用场景"></a>Docker的应用场景</h3><ul>
+<li>Web应用的自动化打包和发布。</li>
+<li>自动化测试和持续集成、发布。</li>
+<li>在服务型环境中部署和调整数据库或其他的后台应用。</li>
+<li>从头编译或者扩展现有的OpenShift或Cloud Foundry平台来搭建自己的PaaS环境。  </li>
+</ul>
+<h3 id="Docker的优点"><a href="#Docker的优点" class="headerlink" title="Docker的优点"></a>Docker的优点</h3><h4 id="更高效的利用系统资源"><a href="#更高效的利用系统资源" class="headerlink" title="更高效的利用系统资源"></a>更高效的利用系统资源</h4><p>由于容器不需要进行硬件虚拟以及运行完整操作系统等额外开销，Docker对系统资源的利用率更高。无论是应用执行速度、内存损耗或者文件存储速度，都要比传统虚拟机技术更高效。因此，相比虚拟机技术，一个相同配置的主机，往往可以运行更多数量的应用。</p>
+<h4 id="更快速的启动时间"><a href="#更快速的启动时间" class="headerlink" title="更快速的启动时间"></a>更快速的启动时间</h4><p>传统的虚拟机技术启动应用服务往往需要数分钟，而Docker容器应用，由于直接运行于宿主内核，无需启动完整的操作系统，因此可以做到秒级、甚至毫秒级的启动时间。大大的节约了开发、测试、部署的时间。</p>
+<h4 id="一致的运行环境"><a href="#一致的运行环境" class="headerlink" title="一致的运行环境"></a>一致的运行环境</h4><p>开发过程中一个常见的问题是环境一致性问题。由于开发环境、测试环境、生产环境不一致，导致有些bug并未在开发过程中被发现。而Docker的镜像提供了除内核外完整的运行时环境，确保了应用运行环境一致性，从而不会再出现<strong>「这段代 码在我机器上没问题啊」</strong>这类问题。</p>
+<h4 id="持续交付和部署"><a href="#持续交付和部署" class="headerlink" title="持续交付和部署"></a>持续交付和部署</h4><p>对开发和运维（DevOps）人员来说，最希望的就是一次创建或配置，可以在任意地方正常运行。 使用Docker可以通过定制应用镜像来实现持续集成、持续交付、部署。开发人员可以通过 <code>Dockerfile</code> 来进行镜像构建，并结合持续集成(Continuous Integration)系统进行集成测试，而运维人员则可以直接在生产环境中快速部署该镜像，甚至结合持续部署(Continuous Delivery/Deployment)系统进行自动部署。而且使用<code>Dockerfile</code>使镜像构建透明化，不仅仅开发团队可以理解应用运行环境，也方便运维团队理解应用运行所需条件，帮助更好的生产环境中部署该镜像。</p>
+<h4 id="更轻松的迁移"><a href="#更轻松的迁移" class="headerlink" title="更轻松的迁移"></a>更轻松的迁移</h4><p>由于Docker确保了执行环境的一致性，使得应用的迁移更加容易。Docker可以在很多平台上运行，无论是物理机、虚拟机、公有云、私有云，甚至是笔记本，其运行结果是一致的。因此用户可以很轻易的将在一个平台上运行的应用，迁移到另一个平台上，而不用担心运行环境的变化导致应用无法正常运行的情况。</p>
+<h4 id="更轻松的维护和扩展"><a href="#更轻松的维护和扩展" class="headerlink" title="更轻松的维护和扩展"></a>更轻松的维护和扩展</h4><p>Docker使用的分层存储以及镜像的技术，使得应用重复部分的复用更为容易，也使得应用的维护更新更加简单，基于基础镜像进一步扩展镜像也变得非常简单。此外，Docker团队同各个开源项目团队一起维护了一大批高质量的官方镜像，既可以直接在生产环境使用，又可以作为基础进一步定制，大大的降低了应用服务的镜像制作成本。</p>
+<h3 id="Docker的一些名词术语"><a href="#Docker的一些名词术语" class="headerlink" title="Docker的一些名词术语"></a>Docker的一些名词术语</h3><ul>
+<li>host   宿主机  </li>
+<li>image  镜像  </li>
+<li>container  容器  </li>
+<li>registry  仓库  </li>
+<li>deamon  守护进程  </li>
+<li>client  客户端  </li>
+</ul>
+<h3 id="国内一些仓库"><a href="#国内一些仓库" class="headerlink" title="国内一些仓库"></a>国内一些仓库</h3><ul>
+<li>aliyun(需要登录)</li>
+<li>daocloud  </li>
+<li>时速云  </li>
+<li>网易</li>
+</ul>
+<h3 id="Docker官方仓库"><a href="#Docker官方仓库" class="headerlink" title="Docker官方仓库"></a>Docker官方仓库</h3><p><a href="https://hub.docker.com/" target="_blank" rel="noopener">docker hub</a></p>
+<h2 id="Docker基本概念"><a href="#Docker基本概念" class="headerlink" title="Docker基本概念"></a>Docker基本概念</h2><h3 id="Docker包括三个基本概念"><a href="#Docker包括三个基本概念" class="headerlink" title="Docker包括三个基本概念"></a>Docker包括三个基本概念</h3><ul>
+<li>镜像(Image)</li>
+<li>容器(Container)</li>
+<li>仓库(Repository)</li>
+</ul>
+<p><code>镜像</code>是静态的、只读的文件，类似于面向对象编程中的类，docker镜像使用了<code>分层存储</code>的架构，构建时，前一层是后一层的基础，而后一层的所有改变只在该层发生作用，好处是可以对镜像进行更好的定制及复用，如使用<a href="https://hub.docker.com/" target="_blank" rel="noopener">dockerHub</a>上下载构建好的镜像，然后根据自己的需求在该镜像基础上添加新的层，就可以定制自己的镜像。</p>
+<p><code>容器</code>是镜像运行时的实体，类似于面向对象编程中的对象，容器可以被创建、启动、停止、删除等。容器的实质是进程，而且容器有隔离的特性，容器之间是相互独立的，有属于自己的命名空间、自己的网络配置等。当每一个容器运行时，是以镜像为基础层在其上创建一层当前容器的存储层，这一层称为<code>容器存储层</code>，运行时他是<code>可读写</code>的。但是当销毁一个容器时，这一层的信息也会随着被销毁，所以容器存储层要保持无状态化，对该层的文件写入操作应该使用<code>数据卷</code>或者绑定宿主机目录，直接对宿主机(或网络存储)发生读写，其性能和稳定性更高。</p>
+<p><code>仓库</code>则是管理镜像的地方，可以将镜像提交到仓库，让其它用户也可以使用你的镜像，类似于管理镜像的<a href="https://github.com/" target="_blank" rel="noopener">github</a>，docker的官方仓库是<a href="https://hub.docker.com/" target="_blank" rel="noopener">dockerHub</a>。</p>
+<p>理解了这三个概念，就理解了Docker的整个生命周期。</p>
+<h2 id="Docker各种平台下的安装"><a href="#Docker各种平台下的安装" class="headerlink" title="Docker各种平台下的安装"></a>Docker各种平台下的安装</h2><h3 id="1-unix-amp-linux下安装"><a href="#1-unix-amp-linux下安装" class="headerlink" title="1.unix &amp; linux下安装"></a>1.unix &amp; linux下安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Centos、Redhat</span></span><br><span class="line">yum install -y docker</span><br><span class="line"><span class="meta">#</span><span class="bash"> Ubuntu、Debain</span></span><br><span class="line">apt-get install -y docker</span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动|关闭|重启  </span></span><br><span class="line">systemctl start|stop|restart docker  </span><br><span class="line"><span class="meta">#</span><span class="bash"> 开机自启  </span></span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
+<h3 id="2-mac-系统安装"><a href="#2-mac-系统安装" class="headerlink" title="2.mac 系统安装"></a>2.mac 系统安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install docker</span><br></pre></td></tr></table></figure>
+<p>安装完成查看信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看docker信息</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker info</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看docker版本  </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker version  </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker一般存储位置  /var/lib/docker/devicemapper/devicemapper/data</span></span><br></pre></td></tr></table></figure>
+<h2 id="Docker基本操作"><a href="#Docker基本操作" class="headerlink" title="Docker基本操作"></a>Docker基本操作</h2><h3 id="镜像基本操作"><a href="#镜像基本操作" class="headerlink" title="镜像基本操作"></a>镜像基本操作</h3><h4 id="搜索镜像"><a href="#搜索镜像" class="headerlink" title="搜索镜像"></a>搜索镜像</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查找镜像</span></span><br><span class="line">docker search centos</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 从Docker仓库中获取镜像，不加标签默认latest</span></span><br><span class="line">docker pull centos:latest</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 列出已经下载好的镜像</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br><span class="line">REPOSITORY          TAG                  IMAGE ID            CREATED             SIZE</span><br><span class="line">docker.io/nginx     latest               ed21b7a8aee9        12 days ago         127 MB</span><br><span class="line">docker.io/php       7.2-fpm-alpine3.11   d9d4aaebe714        2 weeks ago         74.2 MB</span><br><span class="line">docker.io/ubuntu    18.04                4e5021d210f6        3 weeks ago         64.2 MB</span><br><span class="line">docker.io/centos    latest               470671670cac        2 months ago        237 MB</span><br></pre></td></tr></table></figure>
+<h4 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除镜像（可使用名称或镜像ID删除），只能删除没有容器运行的镜像，（增加-f为强制删除）</span></span><br><span class="line">docker rmi docker.io/centos</span><br><span class="line">docker rmi -f docker.io/centos</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 列出所有镜像ID</span></span><br><span class="line">docker images -q</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 批量删除所有镜像</span></span><br><span class="line">docker rmi (docker images -q)</span><br></pre></td></tr></table></figure>
+<h4 id="过滤查询部分镜像"><a href="#过滤查询部分镜像" class="headerlink" title="过滤查询部分镜像"></a>过滤查询部分镜像</h4><p><code>docker images</code>会列出所有的顶层镜像，我们可以使用过滤器参数 <code>--filter</code>，或者简写 <code>-f</code>，用来查出部分镜像。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查出某个指定的镜像</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker images nginx</span></span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">docker.io/nginx     latest              ed21b7a8aee9        12 days ago         127 MB</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查出本地仓库在ubuntu:18.04之后构建的镜像，使用since表示之后，之前可以使用before表示</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker images -f since=ubuntu:18.04</span></span><br><span class="line">REPOSITORY          TAG                  IMAGE ID            CREATED             SIZE</span><br><span class="line">docker.io/nginx     latest               ed21b7a8aee9        12 days ago         127 MB</span><br><span class="line">docker.io/php       7.2-fpm-alpine3.11   d9d4aaebe714        2 weeks ago         74.2 MB</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 自定义格式显示，使用--format参数，比如我们只想看镜像的ID、仓库名称及标签信息，需要使用GO的模板语法</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker images --format <span class="string">"&#123;&#123;.ID&#125;&#125; : &#123;&#123;.Repository&#125;&#125; : &#123;&#123;.Tag&#125;&#125;"</span></span></span><br><span class="line">ed21b7a8aee9 : docker.io/nginx : latest</span><br><span class="line">d9d4aaebe714 : docker.io/php : 7.2-fpm-alpine3.11</span><br><span class="line">4e5021d210f6 : docker.io/ubuntu : 18.04</span><br></pre></td></tr></table></figure>
+<h4 id="保存及导入镜像"><a href="#保存及导入镜像" class="headerlink" title="保存及导入镜像"></a>保存及导入镜像</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将镜像保存成 tar 归档文件。</span></span><br><span class="line">docker save -o testNginx.tar nginx:latest</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将归档文件导入为镜像</span></span><br><span class="line">docker load -i testNginx.tar</span><br></pre></td></tr></table></figure>
+<h3 id="容器基本操作"><a href="#容器基本操作" class="headerlink" title="容器基本操作"></a>容器基本操作</h3><h4 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h4><ul>
+<li><code>docker run</code> 创建并运行一个容器的主要命令</li>
+<li><code>-i</code> 进行交互模式</li>
+<li><code>-t</code> 分配一个伪终端(tty)</li>
+<li><code>-d</code> 容器以守护进程运行</li>
+<li><code>--name</code> 为容器命名</li>
+<li><code>/bin/bash</code> 使用shell</li>
+<li><code>-p</code> : 是容器内部端口绑定到指定的主机端口。</li>
+<li><code>-P</code> :是容器内部端口映射到主机的<code>随机</code>端口。  </li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建并运行一个nginx容器，将容器内80端口映射到宿主机8080端口，容器命名为myNginx，并启动一个`/bin/bash`终端进行交互</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run -it -p 8080:80 --name myNginx1 nginx:latest /bin/bash</span></span><br><span class="line">root@400f555a8234:/#</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建一个容器但不运行它</span></span><br><span class="line">docker create --name testNginx nginx:latest</span><br></pre></td></tr></table></figure>
+<p>当使用<code>docker run</code>创建容器时，后台的标准操作为：</p>
+<ul>
+<li>检查本地是否存在指定镜像，不存在则去公有仓库下载</li>
+<li>使用镜像创建并启动一个容器</li>
+<li>分配一个文件系统，并在只读的镜像层外面挂载一层可读可写层</li>
+<li>从宿主机主机配置的桥接接口中桥接一个虚拟接口到容器中去</li>
+<li>从地址池配置一个ip地址给容器</li>
+<li>执行用户指定的应用程序</li>
+<li>执行完毕后容器被终止</li>
+</ul>
+<h4 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看运行中的容器，查看所有容器使用 -a 参数</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker ps</span></span><br><span class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES</span><br><span class="line">d66658ac8a18        nginx               "/bin/bash"         About an hour ago   Up 49 minutes       80/tcp              myNginx</span><br></pre></td></tr></table></figure>
+<h4 id="操作容器状态"><a href="#操作容器状态" class="headerlink" title="操作容器状态"></a>操作容器状态</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 停止一个容器，myNginx为容器名称，也可使用容器ID</span></span><br><span class="line">docker stop myNginx</span><br><span class="line">docker kill myNginx</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动一个停止的容器</span></span><br><span class="line">docker start myNginx</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启一个容器</span></span><br><span class="line">docker restart myNginx</span><br></pre></td></tr></table></figure>
+<h4 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除一个停止的容器,加 -f 表示强制删除，可以删除正在运行的容器</span></span><br><span class="line">docker rm myNginx</span><br></pre></td></tr></table></figure>
+<h4 id="查看容器信息"><a href="#查看容器信息" class="headerlink" title="查看容器信息"></a>查看容器信息</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看容器中运行的进程信息</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker top myNginx</span></span><br><span class="line">UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD</span><br><span class="line">root                9227                9208                0                   16:46               ?                   00:00:00            nginx: master process nginx -g daemon off;</span><br><span class="line">101                 9248                9227                0                   16:46               ?                   00:00:00            nginx: worker process</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看容器端口映射</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker port myNginx</span></span><br><span class="line">80/tcp -&gt; 0.0.0.0:8081</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看容器或者镜像的详细信息</span></span><br><span class="line">docker inspect myNginx</span><br><span class="line">docker inspect nginx:latest</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 输出指定容器日志信息</span></span><br><span class="line">docker logs myNginx</span><br></pre></td></tr></table></figure>
+<h4 id="进入与退出容器"><a href="#进入与退出容器" class="headerlink" title="进入与退出容器"></a>进入与退出容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 退出容器回到宿主机（两种方式）</span></span><br><span class="line">exit # 等同于使用快捷键ctrl+d，如容器没有使用守护进程，退出后容器也停止</span><br><span class="line">ctrl+p+q # 退出不停止容器</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入容器（两种方式）</span></span><br><span class="line">docker attach myNginx</span><br><span class="line">docker exec -it myNginx /bin/bash  </span><br><span class="line"><span class="meta">#</span><span class="bash"> 两者区别</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> attach 直接进入容器启动命令的终端，不会启动新的进程，当多个窗口同时 attach 到同一个容器的时候，所有窗口都会同步显示。当某个窗口因命令阻塞时,其他窗口也无法执行操作。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">exec</span> 是在容器打开新的终端，并且可以启动新的进程</span></span><br></pre></td></tr></table></figure>
+<h4 id="导入导出容器快照"><a href="#导入导出容器快照" class="headerlink" title="导入导出容器快照"></a>导入导出容器快照</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 导出容器快照</span></span><br><span class="line">docker export myNginx &gt; myNginx.tar</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 导入容器快照</span></span><br><span class="line">docker import myNginx.tar test_nginx #注意导入后镜像名称必须全部为小写</span><br></pre></td></tr></table></figure>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>《Docker入门到实践》</li>
+<li><a href="https://www.runoob.com/docker/docker-tutorial.html" target="_blank" rel="noopener">Docker教程</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/17/PHP-environment-lnmp-source-installation/" rel="next" title="PHP environment lnmp source installation">
+                <i class="fa fa-chevron-left"></i> PHP environment lnmp source installation
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/08/test/" rel="prev" title="test">
+                test <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Uncle Qiu">
+            
+              <p class="site-author-name" itemprop="name">Uncle Qiu</p>
+              <p class="site-description motion-element" itemprop="description">A lazy programmer's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/uncleqiu" title="GitHub &rarr; https://github.com/uncleqiu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:poetuncle@gmail.com" title="E-Mail &rarr; mailto:poetuncle@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker基本介绍"><span class="nav-number">1.</span> <span class="nav-text">Docker基本介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker的应用场景"><span class="nav-number">1.1.</span> <span class="nav-text">Docker的应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker的优点"><span class="nav-number">1.2.</span> <span class="nav-text">Docker的优点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#更高效的利用系统资源"><span class="nav-number">1.2.1.</span> <span class="nav-text">更高效的利用系统资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更快速的启动时间"><span class="nav-number">1.2.2.</span> <span class="nav-text">更快速的启动时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致的运行环境"><span class="nav-number">1.2.3.</span> <span class="nav-text">一致的运行环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持续交付和部署"><span class="nav-number">1.2.4.</span> <span class="nav-text">持续交付和部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更轻松的迁移"><span class="nav-number">1.2.5.</span> <span class="nav-text">更轻松的迁移</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更轻松的维护和扩展"><span class="nav-number">1.2.6.</span> <span class="nav-text">更轻松的维护和扩展</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker的一些名词术语"><span class="nav-number">1.3.</span> <span class="nav-text">Docker的一些名词术语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#国内一些仓库"><span class="nav-number">1.4.</span> <span class="nav-text">国内一些仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker官方仓库"><span class="nav-number">1.5.</span> <span class="nav-text">Docker官方仓库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker基本概念"><span class="nav-number">2.</span> <span class="nav-text">Docker基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker包括三个基本概念"><span class="nav-number">2.1.</span> <span class="nav-text">Docker包括三个基本概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker各种平台下的安装"><span class="nav-number">3.</span> <span class="nav-text">Docker各种平台下的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-unix-amp-linux下安装"><span class="nav-number">3.1.</span> <span class="nav-text">1.unix &amp; linux下安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-mac-系统安装"><span class="nav-number">3.2.</span> <span class="nav-text">2.mac 系统安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker基本操作"><span class="nav-number">4.</span> <span class="nav-text">Docker基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像基本操作"><span class="nav-number">4.1.</span> <span class="nav-text">镜像基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#搜索镜像"><span class="nav-number">4.1.1.</span> <span class="nav-text">搜索镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除镜像"><span class="nav-number">4.1.2.</span> <span class="nav-text">删除镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤查询部分镜像"><span class="nav-number">4.1.3.</span> <span class="nav-text">过滤查询部分镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#保存及导入镜像"><span class="nav-number">4.1.4.</span> <span class="nav-text">保存及导入镜像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器基本操作"><span class="nav-number">4.2.</span> <span class="nav-text">容器基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#运行容器"><span class="nav-number">4.2.1.</span> <span class="nav-text">运行容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看容器"><span class="nav-number">4.2.2.</span> <span class="nav-text">查看容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作容器状态"><span class="nav-number">4.2.3.</span> <span class="nav-text">操作容器状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除容器"><span class="nav-number">4.2.4.</span> <span class="nav-text">删除容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看容器信息"><span class="nav-number">4.2.5.</span> <span class="nav-text">查看容器信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入与退出容器"><span class="nav-number">4.2.6.</span> <span class="nav-text">进入与退出容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导入导出容器快照"><span class="nav-number">4.2.7.</span> <span class="nav-text">导入导出容器快照</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Uncle Qiu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

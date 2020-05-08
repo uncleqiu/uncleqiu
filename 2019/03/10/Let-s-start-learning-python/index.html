@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Python是一种易于学习，功能强大的编程语言。">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Let&#39;s start learning python">
+<meta property="og:url" content="https://uncleqiu.github.io/uncleqiu/2019/03/10/Let-s-start-learning-python/index.html">
+<meta property="og:site_name" content="Uncle Qiu">
+<meta property="og:description" content="Python是一种易于学习，功能强大的编程语言。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-10T07:18:15.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Let&#39;s start learning python">
+<meta name="twitter:description" content="Python是一种易于学习，功能强大的编程语言。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://uncleqiu.github.io/uncleqiu/2019/03/10/Let-s-start-learning-python/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Let's start learning python | Uncle Qiu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Uncle Qiu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">A lazy programmer's blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://uncleqiu.github.io/uncleqiu/2019/03/10/Let-s-start-learning-python/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Uncle Qiu">
+      <meta itemprop="description" content="A lazy programmer's blog">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Uncle Qiu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Let's start learning python
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-10 14:22:43 / Modified: 15:18:15" itemprop="dateCreated datePublished" datetime="2019-03-10T14:22:43+08:00">2019-03-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://www.python.org/" target="_blank" rel="noopener">Python</a>是一种易于学习，功能强大的编程语言。<a id="more"></a>它具有高效的高级数据结构和面向对象编程的简单而有效的方法。Python优雅的语法和动态类型及其解释特性使其成为大多数平台上许多领域的脚本编写和快速应用程序开发的理想语言。  </p>
+<h4 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a>一、环境搭建</h4><h5 id="各种平台下的安装"><a href="#各种平台下的安装" class="headerlink" title="各种平台下的安装"></a>各种平台下的安装</h5><h6 id="1-unix-amp-linux下安装"><a href="#1-unix-amp-linux下安装" class="headerlink" title="1.unix &amp; linux下安装"></a>1.unix &amp; linux下安装</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 这里安装3.x.x版本的Python</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://www.python.org/ftp/python/3.7.2/Python-3.7.2.tgz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> tar -zxvf Python-3.7.2.tgz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> Python-3.7.2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./configure</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> make &amp;&amp; make install</span></span><br></pre></td></tr></table></figure>
+<h6 id="2-MAC安装Python"><a href="#2-MAC安装Python" class="headerlink" title="2.MAC安装Python"></a>2.MAC安装Python</h6><p>MAC系统都自带有Python2.7环境，这里还是安装python3.x的版本，可以前往<a href="https://www.python.org/downloads/mac-osx" target="_blank" rel="noopener">官网</a>下载对应的pkg包进行安装，也可以下载源码包进行安装。</p>
+<h6 id="3-Windows安装Python"><a href="#3-Windows安装Python" class="headerlink" title="3.Windows安装Python"></a>3.Windows安装Python</h6><p>前往<a href="https://www.python.org/downloads/windows" target="_blank" rel="noopener">官网</a>找到对应的安装包，一般就下载 executable installer，x86 表示是 32 位机子的，x86-64 表示 64 位机子的。</p>
+<h5 id="环境变量设置"><a href="#环境变量设置" class="headerlink" title="环境变量设置"></a>环境变量设置</h5><h6 id="1-unix-Linux"><a href="#1-unix-Linux" class="headerlink" title="1.unix/Linux"></a>1.unix/Linux</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$PATH</span>:/usr/local/bin/python"</span></span></span><br></pre></td></tr></table></figure>
+<h6 id="2-windows"><a href="#2-windows" class="headerlink" title="2.windows"></a>2.windows</h6><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># C:\Python 是Python的安装目录</span><br><span class="line"><span class="built_in">path</span>=<span class="variable">%path%</span>;C:\Python</span><br></pre></td></tr></table></figure>
+<h5 id="测试python是否可用"><a href="#测试python是否可用" class="headerlink" title="测试python是否可用"></a>测试python是否可用</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python3</span></span><br><span class="line">Python 3.7.0 (v3.7.0:1bf9cc5093, Jun 26 2018, 20:42:06)</span><br><span class="line">[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin</span><br><span class="line">Type "help", "copyright", "credits" or "license" for more information.</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="二、基础语法"><a href="#二、基础语法" class="headerlink" title="二、基础语法"></a>二、基础语法</h4><h5 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h5><p>Python标识符是用于标识变量，函数，类，模块或其他对象的名称。 标识符以字母A到Z或a到z或下划线<code>_</code>开头，后跟零个或多个字母，下划线和数字（0到9）。<br>以下是Python标识符的约定</p>
+<ul>
+<li>类名以大写字母开头。所有其他标识符以小写字母开头。</li>
+<li>用单个前导下划线启动标识符表示标识符是私有的，如<code>_foo</code></li>
+<li>启动带有两个前导下划线的标识符表示强私有标识符。如<code>__foo</code></li>
+<li>如果标识符也以两个尾部下划线结尾，则标识符是语言定义的特殊名称。如<code>__foo__</code></li>
+</ul>
+<h5 id="保留字"><a href="#保留字" class="headerlink" title="保留字"></a>保留字</h5><p>保留字即关键字，我们不能把它们用作任何标识符名称。Python 的标准库提供了一个 keyword 模块，可以输出当前版本的所有关键字。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> keyword</span><br><span class="line">keyword.kwlist</span><br></pre></td></tr></table></figure></p>
+<h5 id="行与缩进"><a href="#行与缩进" class="headerlink" title="行与缩进"></a>行与缩进</h5><p>Python没有提供大括号<code>{}</code>来指示类和函数定义或流控制的代码块。代码块由行<b>缩进</b>表示，这是严格执行的。  缩进的空格数是<b>可变的</b>，但是同一个代码块的语句必须包含<b>相同的缩进空格数</b>。如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">True</span>:</span><br><span class="line">    print(<span class="string">"True"</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">False</span>:    </span><br><span class="line">    print(<span class="string">"False"</span>)</span><br></pre></td></tr></table></figure></p>
+<h5 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h5><p>Python中单行注释以<code>#</code>开头，如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是一个单行注释</span></span><br><span class="line">print(<span class="string">"Python"</span>) <span class="comment">#注释</span></span><br></pre></td></tr></table></figure></p>
+<p>Python中多行注释可以用多个<code>#</code>号，或者使用三个单引号<code>&#39;&#39;&#39;</code>，或者三个双引号<code>&quot;&quot;&quot;</code>进行块注释，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">先用单引号</span></span><br><span class="line"><span class="string">进行多行注释</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">再用双引号</span></span><br><span class="line"><span class="string">进行多行注释</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">print(<span class="string">'Hello World!'</span>)</span><br></pre></td></tr></table></figure></p>
+<h5 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h5><p>Python语句可以以<code>;</code>作为结束符也可以省略，当在单行使用多个语句时可以用<code>;</code>进行分割。如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numVal = <span class="number">10</span>;listVal = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br></pre></td></tr></table></figure></p>
+<p>Python中的语句通常以新行结束，也允许使用行反斜杠<code>\</code>来表示该行应该继续。如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">total = <span class="number">1</span> + \</span><br><span class="line">	    <span class="number">2</span> + \</span><br><span class="line">	    <span class="number">3</span></span><br><span class="line">print(total)</span><br></pre></td></tr></table></figure></p>
+<p>其中语句中包含<code>[]</code>，<code>{}</code>或<code>()</code>时不需要反斜杠<code>\</code>进行连接。如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">total = [<span class="number">1</span>,</span><br><span class="line">	     <span class="number">2</span>,</span><br><span class="line">	     <span class="number">3</span>,</span><br><span class="line">	     <span class="number">4</span>]</span><br></pre></td></tr></table></figure></p>
+<h4 id="三、数据类型"><a href="#三、数据类型" class="headerlink" title="三、数据类型"></a>三、数据类型</h4><h5 id="1-数字类型"><a href="#1-数字类型" class="headerlink" title="1.数字类型"></a>1.数字类型</h5><p>数字类型包括 <b>int(整型)、float(浮点型)、bool(布尔型)、complex(复数)</b>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 整型</span></span><br><span class="line">foo = <span class="number">10</span></span><br><span class="line">print(foo, type(foo))</span><br><span class="line"><span class="comment"># 2.浮点型</span></span><br><span class="line">foo = <span class="number">10.10</span></span><br><span class="line">print(foo, type(foo))</span><br><span class="line"><span class="comment"># 3. 复数</span></span><br><span class="line">foo = <span class="number">2</span> + <span class="number">1j</span></span><br><span class="line">print(foo, type(foo))</span><br><span class="line">print(<span class="string">'复数的实部:'</span>+str(foo.real),<span class="string">'复数的虚部:'</span>+str(foo.imag))</span><br><span class="line">print(<span class="string">'复数的实部:%s 复数的虚部:%s'</span> %(foo.real, foo.imag))</span><br><span class="line"><span class="comment"># 使用多个变量赋值</span></span><br><span class="line">a, b, c = <span class="number">10</span>, <span class="number">10.10</span>, <span class="number">2</span> + <span class="number">1j</span></span><br><span class="line">print(type(a), type(b), type(c))</span><br></pre></td></tr></table></figure></p>
+<h5 id="2-字符串类型"><a href="#2-字符串类型" class="headerlink" title="2.字符串类型"></a>2.字符串类型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">注意：</span></span><br><span class="line"><span class="string">	1. 反斜杠可以用来转义，字符串前加r可以让反斜杠不发生转义。</span></span><br><span class="line"><span class="string">	2. 字符串可以用+连接，用*重复</span></span><br><span class="line"><span class="string">	3. 字符串索引从左往右从0开始，从右往左从-1开始</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 声明空字符串</span></span><br><span class="line">foo = <span class="string">''</span></span><br><span class="line">foo1 = str();</span><br><span class="line">print(foo, type(foo), foo1, type(foo1))</span><br><span class="line"><span class="comment"># 声明一个字符串</span></span><br><span class="line">foo = <span class="string">'Hello Python3'</span></span><br><span class="line">print(foo, type(foo))</span><br><span class="line"><span class="comment"># 字符串下标取从左到右是0开始，从右到左是-1开始</span></span><br><span class="line">print(foo[<span class="number">0</span>], foo[<span class="number">3</span>])</span><br><span class="line"><span class="comment"># 字符串下标从哪到哪以:分割</span></span><br><span class="line">print(foo[<span class="number">0</span>:<span class="number">1</span>], foo[<span class="number">1</span>:<span class="number">3</span>], foo[<span class="number">2</span>:<span class="number">-1</span>])</span><br><span class="line"><span class="comment"># 字符串从下标至结束</span></span><br><span class="line">print(foo[<span class="number">0</span>:], foo[<span class="number">2</span>:])</span><br><span class="line"><span class="comment"># 输出字符串两次</span></span><br><span class="line">print(foo * <span class="number">2</span>)</span><br><span class="line"><span class="comment"># 使用\转义</span></span><br><span class="line">print(<span class="string">'Hello \n Python3'</span>) <span class="comment"># \n会换行</span></span><br><span class="line">print(<span class="string">'Hello \\n Python3'</span>) <span class="comment"># 使用\转义 让\n原样输出</span></span><br><span class="line">print(<span class="string">r'Hello \n Python3'</span>) <span class="comment"># 字符串前加r，使其原样输出</span></span><br><span class="line"><span class="comment"># 使用+进行拼接</span></span><br><span class="line">foo = <span class="string">'Hello'</span></span><br><span class="line">print(foo + <span class="string">' Python3'</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="3-布尔类型"><a href="#3-布尔类型" class="headerlink" title="3.布尔类型"></a>3.布尔类型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">trueFoo = <span class="keyword">True</span></span><br><span class="line">falseFoo = <span class="keyword">False</span></span><br><span class="line">print(trueFoo, type(trueFoo))</span><br><span class="line">print(falseFoo, type(falseFoo))</span><br></pre></td></tr></table></figure>
+<h5 id="4-列表"><a href="#4-列表" class="headerlink" title="4.列表"></a>4.列表</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">注意：</span></span><br><span class="line"><span class="string">	1. list可以被索引和切片</span></span><br><span class="line"><span class="string">	2. list可以使用+进行拼接</span></span><br><span class="line"><span class="string">	3. list中的元素是可变的</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 声明空列表</span></span><br><span class="line">foo = []</span><br><span class="line">foo1 = list()</span><br><span class="line">print(foo, type(foo), foo1, type(foo1))</span><br><span class="line"><span class="comment"># 声明一个列表</span></span><br><span class="line">foo = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">print(foo, type(foo))</span><br><span class="line"><span class="comment"># 下标索引从左到右从0开始，从右到左则-1开始</span></span><br><span class="line">print(foo[<span class="number">1</span>], foo[<span class="number">3</span>], foo[<span class="number">-1</span>], foo[<span class="number">0</span>:<span class="number">2</span>], foo[<span class="number">2</span>:])</span><br><span class="line"><span class="comment"># 列表截取支持可以接收三个参数，第三个参数代表截取的步长</span></span><br><span class="line">print(foo[<span class="number">0</span>:<span class="number">5</span>:<span class="number">2</span>])</span><br><span class="line"><span class="comment"># 列表是可变的</span></span><br><span class="line">foo[<span class="number">0</span>] = <span class="number">99</span></span><br><span class="line">foo[<span class="number">1</span>:<span class="number">3</span>] = [<span class="number">22</span>, <span class="number">33</span>] </span><br><span class="line">print(foo)</span><br><span class="line"><span class="comment"># 输出两次列表</span></span><br><span class="line">print(foo * <span class="number">2</span>)</span><br><span class="line"><span class="comment"># 连接列表</span></span><br><span class="line">foo1 = [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]</span><br><span class="line">print(foo + foo1)</span><br></pre></td></tr></table></figure>
+<h5 id="5-元组"><a href="#5-元组" class="headerlink" title="5.元组"></a>5.元组</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">注意：</span></span><br><span class="line"><span class="string">	1. 元组也可以被索引和切片</span></span><br><span class="line"><span class="string">	2. 元组也可以使用+进行拼接</span></span><br><span class="line"><span class="string">	3. 元组中的元素是不可修改的</span></span><br><span class="line"><span class="string">	4. 注意构造包含 0 或 1 个元素的元组的特殊语法规则</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">foo = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line">print(foo, type(foo))</span><br><span class="line"><span class="comment"># 下标索引从左到右从0开始，从右到左则-1开始</span></span><br><span class="line">print(foo[<span class="number">1</span>], foo[<span class="number">3</span>], foo[<span class="number">-1</span>], foo[<span class="number">0</span>:<span class="number">2</span>], foo[<span class="number">2</span>:])</span><br><span class="line"><span class="comment"># 元组元素是不可变的，如果元素是列表可变</span></span><br><span class="line">foo = (<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>], <span class="number">5</span>, <span class="number">6</span>)</span><br><span class="line"><span class="comment"># foo[0] = 10 这里会报错</span></span><br><span class="line">foo[<span class="number">2</span>][<span class="number">1</span>] = <span class="number">20</span></span><br><span class="line">print(foo)</span><br><span class="line"><span class="comment"># 构造一个空元组</span></span><br><span class="line">foo = ()</span><br><span class="line">foo1 = tuple()</span><br><span class="line">print(foo, type(foo), foo1, type(foo1))</span><br><span class="line"><span class="comment"># 构造一个元素的元组</span></span><br><span class="line">foo = (<span class="number">1</span>) <span class="comment"># 这种方法构造出来的类型不是元组,需使用以下方法：</span></span><br><span class="line">foo1 = (<span class="number">1</span>,)</span><br><span class="line">foo2 = <span class="number">1</span>,</span><br><span class="line">print(foo, type(foo), foo1, type(foo1), foo2, type(foo2))</span><br></pre></td></tr></table></figure>
+<h5 id="6-集合"><a href="#6-集合" class="headerlink" title="6.集合"></a>6.集合</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">注意：</span></span><br><span class="line"><span class="string">	1.可以使用&#123;&#125;或者set()函数创建集合，但是创建空集合必须用set()，因为&#123;&#125;是用来创建一个空字典的</span></span><br><span class="line"><span class="string">	2.集合是无序、不可修改的</span></span><br><span class="line"><span class="string">	3.集合会自动去重</span></span><br><span class="line"><span class="string">	4.set()至多只能传一个参数</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 声明空集合</span></span><br><span class="line">foo = set()</span><br><span class="line">print(foo, type(foo))</span><br><span class="line"><span class="comment"># 声明一个集合</span></span><br><span class="line">foo = set(<span class="string">'123hello'</span>)</span><br><span class="line">foo1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">5</span>&#125;</span><br><span class="line">print(foo, type(foo), foo1, type(foo1))</span><br><span class="line"><span class="comment"># 测试元素是否在集合中</span></span><br><span class="line">print(<span class="string">'o'</span> <span class="keyword">in</span> foo, <span class="number">10</span> <span class="keyword">in</span> foo1)</span><br><span class="line"><span class="comment"># 声明两个集合</span></span><br><span class="line">foo = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">20</span>, <span class="number">53</span>&#125;</span><br><span class="line">foo1 = &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">22</span>, <span class="number">20</span>, <span class="number">5</span>&#125;</span><br><span class="line"><span class="comment"># 计算差集</span></span><br><span class="line">diff = foo - foo1</span><br><span class="line">diff2 = foo1 - foo</span><br><span class="line">print(diff, type(diff), diff2, type(diff2))</span><br><span class="line"><span class="comment"># 计算并集</span></span><br><span class="line">diff = foo | foo1</span><br><span class="line">print(diff, type(diff))</span><br><span class="line"><span class="comment"># 计算交集</span></span><br><span class="line">diff = foo &amp; foo1</span><br><span class="line">print(diff, type(diff))</span><br><span class="line"><span class="comment"># 对称差集  两个集合不同时存在的元素</span></span><br><span class="line">diff = foo ^ foo1</span><br><span class="line">print(diff, type(diff))</span><br></pre></td></tr></table></figure>
+<h5 id="7-字典"><a href="#7-字典" class="headerlink" title="7.字典"></a>7.字典</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">注意：</span></span><br><span class="line"><span class="string">	1.可以使用&#123;&#125;或者dict()创建字典</span></span><br><span class="line"><span class="string">	2.字典是一种映射类型，它的元素是键值对</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 声明空字典</span></span><br><span class="line">foo = &#123;&#125;</span><br><span class="line">print(foo, type(foo))</span><br><span class="line"><span class="comment"># 声明一个字典</span></span><br><span class="line">foo = &#123;<span class="string">'name'</span>:<span class="string">'jacky'</span>,<span class="string">'age'</span>:<span class="string">'18'</span>,<span class="string">'sex'</span>:<span class="string">'man'</span>&#125;</span><br><span class="line">print(foo,type(foo))</span><br><span class="line">foo = dict([(<span class="string">'name'</span>,<span class="string">'jacky'</span>),(<span class="string">'age'</span>,<span class="number">20</span>),(<span class="string">'sex'</span>,<span class="string">'man'</span>)])</span><br><span class="line">print(foo, type(foo))</span><br><span class="line">foo = dict(name=<span class="string">'jacky'</span>,age=<span class="number">30</span>,sex=<span class="string">'man'</span>)</span><br><span class="line">print(foo, type(foo))</span><br><span class="line">foo = &#123;x : x ** <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span>(<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>)&#125;</span><br><span class="line">print(foo, type(foo))</span><br><span class="line"><span class="comment"># 获取字典的值</span></span><br><span class="line">foo = &#123;<span class="string">'name'</span>:<span class="string">'jacky'</span>,<span class="string">'age'</span>:<span class="string">'18'</span>,<span class="string">'sex'</span>:<span class="string">'man'</span>&#125;</span><br><span class="line">print(foo[<span class="string">'name'</span>], foo[<span class="string">'age'</span>], foo[<span class="string">'sex'</span>])</span><br><span class="line"><span class="comment"># 获取字典所有的键</span></span><br><span class="line">fooKey = foo.keys()</span><br><span class="line">print(fooKey, type(fooKey))</span><br><span class="line"><span class="comment">#获取字典所有的值</span></span><br><span class="line">fooVal = foo.values()</span><br><span class="line">print(fooVal, type(fooVal))</span><br><span class="line"><span class="comment"># 清空字典</span></span><br><span class="line">print(foo.clear(), foo, type(foo))</span><br></pre></td></tr></table></figure>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="https://docs.python.org" target="_blank" rel="noopener">python org</a></li>
+<li><a href="https://www.tutorialspoint.com/python" target="_blank" rel="noopener">python tutorialspoint</a></li>
+<li><a href="https://www.liaoxuefeng.com" target="_blank" rel="noopener">廖雪峰博客</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/06/Git常用命令整理/" rel="next" title="Git常用命令整理">
+                <i class="fa fa-chevron-left"></i> Git常用命令整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/17/PHP-environment-lnmp-source-installation/" rel="prev" title="PHP environment lnmp source installation">
+                PHP environment lnmp source installation <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Uncle Qiu">
+            
+              <p class="site-author-name" itemprop="name">Uncle Qiu</p>
+              <p class="site-description motion-element" itemprop="description">A lazy programmer's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/uncleqiu" title="GitHub &rarr; https://github.com/uncleqiu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:poetuncle@gmail.com" title="E-Mail &rarr; mailto:poetuncle@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、环境搭建"><span class="nav-number">1.</span> <span class="nav-text">一、环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#各种平台下的安装"><span class="nav-number">1.1.</span> <span class="nav-text">各种平台下的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-unix-amp-linux下安装"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.unix &amp; linux下安装</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-MAC安装Python"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.MAC安装Python</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-Windows安装Python"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.Windows安装Python</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#环境变量设置"><span class="nav-number">1.2.</span> <span class="nav-text">环境变量设置</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-unix-Linux"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.unix/Linux</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-windows"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.windows</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#测试python是否可用"><span class="nav-number">1.3.</span> <span class="nav-text">测试python是否可用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、基础语法"><span class="nav-number">2.</span> <span class="nav-text">二、基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#标识符"><span class="nav-number">2.1.</span> <span class="nav-text">标识符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#保留字"><span class="nav-number">2.2.</span> <span class="nav-text">保留字</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#行与缩进"><span class="nav-number">2.3.</span> <span class="nav-text">行与缩进</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注释"><span class="nav-number">2.4.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#语句"><span class="nav-number">2.5.</span> <span class="nav-text">语句</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、数据类型"><span class="nav-number">3.</span> <span class="nav-text">三、数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-数字类型"><span class="nav-number">3.1.</span> <span class="nav-text">1.数字类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-字符串类型"><span class="nav-number">3.2.</span> <span class="nav-text">2.字符串类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-布尔类型"><span class="nav-number">3.3.</span> <span class="nav-text">3.布尔类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-列表"><span class="nav-number">3.4.</span> <span class="nav-text">4.列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-元组"><span class="nav-number">3.5.</span> <span class="nav-text">5.元组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-集合"><span class="nav-number">3.6.</span> <span class="nav-text">6.集合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-字典"><span class="nav-number">3.7.</span> <span class="nav-text">7.字典</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Uncle Qiu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

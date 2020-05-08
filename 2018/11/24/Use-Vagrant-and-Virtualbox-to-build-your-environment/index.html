@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Vagrant是一个基于Ruby的工具，用于创建和部署虚拟化开发环境。它使用Oracle的开源VirtualBox虚拟化系统，使用Chef创建自动化虚拟环境。Vagrant可以节省开发者搭建环境的时间，并解决了开发环境不一致问题，有了Vagrant，可以导出box文件分发给团队其它开发者使用。">
+<meta name="keywords" content="DevOps,Vagrant,Virtualbox">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Use Vagrant and Virtualbox to build your environment">
+<meta property="og:url" content="https://uncleqiu.github.io/uncleqiu/2018/11/24/Use-Vagrant-and-Virtualbox-to-build-your-environment/index.html">
+<meta property="og:site_name" content="Uncle Qiu">
+<meta property="og:description" content="Vagrant是一个基于Ruby的工具，用于创建和部署虚拟化开发环境。它使用Oracle的开源VirtualBox虚拟化系统，使用Chef创建自动化虚拟环境。Vagrant可以节省开发者搭建环境的时间，并解决了开发环境不一致问题，有了Vagrant，可以导出box文件分发给团队其它开发者使用。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-17T11:15:49.588Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Use Vagrant and Virtualbox to build your environment">
+<meta name="twitter:description" content="Vagrant是一个基于Ruby的工具，用于创建和部署虚拟化开发环境。它使用Oracle的开源VirtualBox虚拟化系统，使用Chef创建自动化虚拟环境。Vagrant可以节省开发者搭建环境的时间，并解决了开发环境不一致问题，有了Vagrant，可以导出box文件分发给团队其它开发者使用。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://uncleqiu.github.io/uncleqiu/2018/11/24/Use-Vagrant-and-Virtualbox-to-build-your-environment/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Use Vagrant and Virtualbox to build your environment | Uncle Qiu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Uncle Qiu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">A lazy programmer's blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://uncleqiu.github.io/uncleqiu/2018/11/24/Use-Vagrant-and-Virtualbox-to-build-your-environment/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Uncle Qiu">
+      <meta itemprop="description" content="A lazy programmer's blog">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Uncle Qiu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Use Vagrant and Virtualbox to build your environment
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-24 22:37:25" itemprop="dateCreated datePublished" datetime="2018-11-24T22:37:25+08:00">2018-11-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-17 19:15:49" itemprop="dateModified" datetime="2018-12-17T19:15:49+08:00">2018-12-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/DevOps/" itemprop="url" rel="index"><span itemprop="name">DevOps</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Vagrant是一个基于Ruby的工具，用于创建和部署虚拟化开发环境。它使用Oracle的开源VirtualBox虚拟化系统，使用Chef创建自动化虚拟环境。Vagrant可以节省开发者搭建环境的时间，并解决了开发环境不一致问题，有了Vagrant，可以导出box文件分发给团队其它开发者使用。<br><a id="more"></a></p>
+<h4 id="一、下载及安装所需应用程序"><a href="#一、下载及安装所需应用程序" class="headerlink" title="一、下载及安装所需应用程序"></a>一、下载及安装所需应用程序</h4><ul>
+<li><a href="https://www.virtualbox.org/" target="_blank" rel="noopener">Virtualbox官方下载地址</a></li>
+<li><a href="https://www.vagrantup.com/" target="_blank" rel="noopener">Vagrant官方下载地址</a></li>
+<li><a href="https://app.vagrantup.com/boxes/search" target="_blank" rel="noopener">Vagrant Box镜像官方下载地址</a></li>
+<li><a href="http://www.vagrantbox.es/" target="_blank" rel="noopener">Vagrant Box镜像下载地址2</a></li>
+<li><a href="https://gitforwindows.org/" target="_blank" rel="noopener">git bash官方下载地址</a></li>
+</ul>
+<h4 id="二、安装连接虚拟机环境"><a href="#二、安装连接虚拟机环境" class="headerlink" title="二、安装连接虚拟机环境"></a>二、安装连接虚拟机环境</h4><p>Now, everything is ready,open your git bash.<br>1.新建开发目录(如D:/dev/)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /d</span><br><span class="line">$ mkdir dev</span><br></pre></td></tr></table></figure></p>
+<p>2.进入开发目录(D:/dev/),并添加box<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> dev</span><br><span class="line">$ vagrant box add myCentos7 centos7.box</span><br></pre></td></tr></table></figure></p>
+<p>执行完添加box命令后，box中的镜像文件被放到了/Users/astaxie/.vagrant.d/boxes/<br>在Window系统中是放到了C:\Users\当前用户名.vagrant.d\boxes\目录下<br>3.初始化<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant init myCentos7</span><br></pre></td></tr></table></figure></p>
+<p>此时开发目录会多一个Vagrantfile文件(虚拟机配置文件)<br>4.启动虚拟机<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant up</span><br></pre></td></tr></table></figure></p>
+<p>5.通过ssh登录本地环境所在虚拟机<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh</span><br></pre></td></tr></table></figure></p>
+<p>如果是用Xshell登录(默认： IP：172.0.0.1  user：vagrant  pwd：vagrant  port：2222)<br>如果使用密钥登录使用当前开发目录(D:\dev.vagrant\machines\default\virtualbox\private_key)<br>此时Linux(centos)环境已经安装完毕</p>
+<h4 id="三、配置Vagrantfile"><a href="#三、配置Vagrantfile" class="headerlink" title="三、配置Vagrantfile"></a>三、配置Vagrantfile</h4><p>1.box设置<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.box = <span class="string">"myCentos7"</span></span><br></pre></td></tr></table></figure></p>
+<p>该名称是初使化vagrant init后面跟的名称<br>2.hostname设置<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.hostname = <span class="string">"centos7"</span></span><br></pre></td></tr></table></figure></p>
+<p>如果我安装了两台虚拟机一台为centos7，另一台为ubuntu16.04，启动时可以使用vagrant up centos7指定某一台启动<br>3.虚拟机网络设置<br>1).端口映射(端口转发)<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.network <span class="string">"forwarded_port"</span>, <span class="symbol">guest:</span> <span class="number">80</span>, <span class="symbol">host:</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure></p>
+<p>虚拟机中的端口映射到宿主机对应的端口使用<br>guest: 80 表示虚拟机中的80端口，host: 8080 表示映射到宿主机的8080端口<br>表示请求宿主机的8080端口转发请求到虚拟机中的80端口<br>2).设置IP地址<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.1.28"</span></span><br></pre></td></tr></table></figure></p>
+<p>4.设置同步(共享)目录<br>新建项目(代码)目录(D:/dev/project/)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir project</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.synced_folder <span class="string">"./project"</span>, <span class="string">"/usr/share/nginx/html"</span></span><br></pre></td></tr></table></figure>
+<p>(/usr/share/nginx/html为虚拟机目录，设置之后两个目录会互相同步)<br>5.配置完成后需要重新启动虚拟机使配置文件生效<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant reload</span><br></pre></td></tr></table></figure></p>
+<p>如需增加其它配置，请查询Vagrantfile配置文件详解</p>
+<h4 id="四、打包分发环境"><a href="#四、打包分发环境" class="headerlink" title="四、打包分发环境"></a>四、打包分发环境</h4><p>当配置好开发环境后，退出并关闭虚拟机，运行如下命令对环境进行打包<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant package</span><br></pre></td></tr></table></figure></p>
+<p>打包完成后会在当前目录生成一个package.box文件，将此文件给其他开发者，其他开发者<br>添加这个box并用其初始化自己的开发目录就能得到一模一样的开发环境</p>
+<h4 id="五、vagrant-常用操作命令"><a href="#五、vagrant-常用操作命令" class="headerlink" title="五、vagrant 常用操作命令"></a>五、vagrant 常用操作命令</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">vagrant box add</td>
+<td style="text-align:center">添加box的操作</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant init</td>
+<td style="text-align:center">初始化box的操作，会生成vagrant的配置文件Vagrantfile</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant up</td>
+<td style="text-align:center">启动本地环境</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant ssh</td>
+<td style="text-align:center">通过 ssh 登录本地环境所在虚拟机</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant halt</td>
+<td style="text-align:center">关闭本地环境</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant suspend</td>
+<td style="text-align:center">暂停本地环境</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant resume</td>
+<td style="text-align:center">恢复本地环境</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant reload</td>
+<td style="text-align:center">修改了 Vagrantfile 后，使之生效（相当于先 halt，再 up）</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant destroy</td>
+<td style="text-align:center">彻底移除本地环境</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant box list</td>
+<td style="text-align:center">显示当前已经添加的box列表</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant box remove</td>
+<td style="text-align:center">删除相应的box</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant package</td>
+<td style="text-align:center">打包命令，可以把当前的运行的虚拟机环境进行打包</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant plugin</td>
+<td style="text-align:center">用于安装卸载插件</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant status</td>
+<td style="text-align:center">获取当前虚拟机的状态</td>
+</tr>
+<tr>
+<td style="text-align:center">vagrant global-status</td>
+<td style="text-align:center">显示当前用户Vagrant的所有环境状态</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+            <a href="/tags/Vagrant/" rel="tag"># Vagrant</a>
+          
+            <a href="/tags/Virtualbox/" rel="tag"># Virtualbox</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/23/Redis安装与配置/" rel="next" title="Redis安装与配置">
+                <i class="fa fa-chevron-left"></i> Redis安装与配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/03/Sphinx-and-CoreSeek/" rel="prev" title="Sphinx and CoreSeek">
+                Sphinx and CoreSeek <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Uncle Qiu">
+            
+              <p class="site-author-name" itemprop="name">Uncle Qiu</p>
+              <p class="site-description motion-element" itemprop="description">A lazy programmer's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/uncleqiu" title="GitHub &rarr; https://github.com/uncleqiu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:poetuncle@gmail.com" title="E-Mail &rarr; mailto:poetuncle@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、下载及安装所需应用程序"><span class="nav-number">1.</span> <span class="nav-text">一、下载及安装所需应用程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、安装连接虚拟机环境"><span class="nav-number">2.</span> <span class="nav-text">二、安装连接虚拟机环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、配置Vagrantfile"><span class="nav-number">3.</span> <span class="nav-text">三、配置Vagrantfile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、打包分发环境"><span class="nav-number">4.</span> <span class="nav-text">四、打包分发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、vagrant-常用操作命令"><span class="nav-number">5.</span> <span class="nav-text">五、vagrant 常用操作命令</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Uncle Qiu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
