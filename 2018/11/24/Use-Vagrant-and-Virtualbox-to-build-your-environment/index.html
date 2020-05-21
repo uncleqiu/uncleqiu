@@ -474,21 +474,21 @@
 <li><a href="http://www.vagrantbox.es/" target="_blank" rel="noopener">Vagrant Box镜像下载地址2</a></li>
 <li><a href="https://gitforwindows.org/" target="_blank" rel="noopener">git bash官方下载地址</a></li>
 </ul>
-<h4 id="二、安装连接虚拟机环境"><a href="#二、安装连接虚拟机环境" class="headerlink" title="二、安装连接虚拟机环境"></a>二、安装连接虚拟机环境</h4><p>Now, everything is ready,open your git bash.<br>1.新建开发目录(如D:/dev/)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /d</span><br><span class="line">$ mkdir dev</span><br></pre></td></tr></table></figure></p>
-<p>2.进入开发目录(D:/dev/),并添加box<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> dev</span><br><span class="line">$ vagrant box add myCentos7 centos7.box</span><br></pre></td></tr></table></figure></p>
-<p>执行完添加box命令后，box中的镜像文件被放到了/Users/astaxie/.vagrant.d/boxes/<br>在Window系统中是放到了C:\Users\当前用户名.vagrant.d\boxes\目录下<br>3.初始化<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant init myCentos7</span><br></pre></td></tr></table></figure></p>
-<p>此时开发目录会多一个Vagrantfile文件(虚拟机配置文件)<br>4.启动虚拟机<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant up</span><br></pre></td></tr></table></figure></p>
-<p>5.通过ssh登录本地环境所在虚拟机<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh</span><br></pre></td></tr></table></figure></p>
+<h4 id="二、安装连接虚拟机环境"><a href="#二、安装连接虚拟机环境" class="headerlink" title="二、安装连接虚拟机环境"></a>二、安装连接虚拟机环境</h4><p>Now, everything is ready,open your git bash.<br>1.新建开发目录(如D:/dev/)<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /d</span><br><span class="line">$ mkdir dev</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>2.进入开发目录(D:/dev/),并添加box<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> dev</span><br><span class="line">$ vagrant box add myCentos7 centos7.box</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>执行完添加box命令后，box中的镜像文件被放到了/Users/astaxie/.vagrant.d/boxes/<br>在Window系统中是放到了C:\Users\当前用户名.vagrant.d\boxes\目录下<br>3.初始化<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant init myCentos7</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>此时开发目录会多一个Vagrantfile文件(虚拟机配置文件)<br>4.启动虚拟机<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant up</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>5.通过ssh登录本地环境所在虚拟机<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>如果是用Xshell登录(默认： IP：172.0.0.1  user：vagrant  pwd：vagrant  port：2222)<br>如果使用密钥登录使用当前开发目录(D:\dev.vagrant\machines\default\virtualbox\private_key)<br>此时Linux(centos)环境已经安装完毕</p>
-<h4 id="三、配置Vagrantfile"><a href="#三、配置Vagrantfile" class="headerlink" title="三、配置Vagrantfile"></a>三、配置Vagrantfile</h4><p>1.box设置<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.box = <span class="string">"myCentos7"</span></span><br></pre></td></tr></table></figure></p>
-<p>该名称是初使化vagrant init后面跟的名称<br>2.hostname设置<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.hostname = <span class="string">"centos7"</span></span><br></pre></td></tr></table></figure></p>
-<p>如果我安装了两台虚拟机一台为centos7，另一台为ubuntu16.04，启动时可以使用vagrant up centos7指定某一台启动<br>3.虚拟机网络设置<br>1).端口映射(端口转发)<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.network <span class="string">"forwarded_port"</span>, <span class="symbol">guest:</span> <span class="number">80</span>, <span class="symbol">host:</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure></p>
-<p>虚拟机中的端口映射到宿主机对应的端口使用<br>guest: 80 表示虚拟机中的80端口，host: 8080 表示映射到宿主机的8080端口<br>表示请求宿主机的8080端口转发请求到虚拟机中的80端口<br>2).设置IP地址<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.1.28"</span></span><br></pre></td></tr></table></figure></p>
-<p>4.设置同步(共享)目录<br>新建项目(代码)目录(D:/dev/project/)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir project</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.synced_folder <span class="string">"./project"</span>, <span class="string">"/usr/share/nginx/html"</span></span><br></pre></td></tr></table></figure>
-<p>(/usr/share/nginx/html为虚拟机目录，设置之后两个目录会互相同步)<br>5.配置完成后需要重新启动虚拟机使配置文件生效<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant reload</span><br></pre></td></tr></table></figure></p>
+<h4 id="三、配置Vagrantfile"><a href="#三、配置Vagrantfile" class="headerlink" title="三、配置Vagrantfile"></a>三、配置Vagrantfile</h4><p>1.box设置<br></p><figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.box = <span class="string">"myCentos7"</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>该名称是初使化vagrant init后面跟的名称<br>2.hostname设置<br></p><figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.hostname = <span class="string">"centos7"</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>如果我安装了两台虚拟机一台为centos7，另一台为ubuntu16.04，启动时可以使用vagrant up centos7指定某一台启动<br>3.虚拟机网络设置<br>1).端口映射(端口转发)<br></p><figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.network <span class="string">"forwarded_port"</span>, <span class="symbol">guest:</span> <span class="number">80</span>, <span class="symbol">host:</span> <span class="number">8080</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>虚拟机中的端口映射到宿主机对应的端口使用<br>guest: 80 表示虚拟机中的80端口，host: 8080 表示映射到宿主机的8080端口<br>表示请求宿主机的8080端口转发请求到虚拟机中的80端口<br>2).设置IP地址<br></p><figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.1.28"</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>4.设置同步(共享)目录<br>新建项目(代码)目录(D:/dev/project/)<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir project</span><br></pre></td></tr></tbody></table></figure><p></p>
+<figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.vm.synced_folder <span class="string">"./project"</span>, <span class="string">"/usr/share/nginx/html"</span></span><br></pre></td></tr></tbody></table></figure>
+<p>(/usr/share/nginx/html为虚拟机目录，设置之后两个目录会互相同步)<br>5.配置完成后需要重新启动虚拟机使配置文件生效<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant reload</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>如需增加其它配置，请查询Vagrantfile配置文件详解</p>
-<h4 id="四、打包分发环境"><a href="#四、打包分发环境" class="headerlink" title="四、打包分发环境"></a>四、打包分发环境</h4><p>当配置好开发环境后，退出并关闭虚拟机，运行如下命令对环境进行打包<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant package</span><br></pre></td></tr></table></figure></p>
+<h4 id="四、打包分发环境"><a href="#四、打包分发环境" class="headerlink" title="四、打包分发环境"></a>四、打包分发环境</h4><p>当配置好开发环境后，退出并关闭虚拟机，运行如下命令对环境进行打包<br></p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant package</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>打包完成后会在当前目录生成一个package.box文件，将此文件给其他开发者，其他开发者<br>添加这个box并用其初始化自己的开发目录就能得到一模一样的开发环境</p>
 <h4 id="五、vagrant-常用操作命令"><a href="#五、vagrant-常用操作命令" class="headerlink" title="五、vagrant 常用操作命令"></a>五、vagrant 常用操作命令</h4><table>
 <thead>
@@ -560,7 +560,25 @@
 </tr>
 </tbody>
 </table>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
       
     </div>
 
@@ -684,7 +702,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
