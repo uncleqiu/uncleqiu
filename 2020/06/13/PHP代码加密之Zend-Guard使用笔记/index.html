@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Zend Guard介绍Zend Guard是一个对PHP代码进行加密的工具。">
+<meta name="keywords" content="blog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP代码加密之Zend-Guard使用笔记">
+<meta property="og:url" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/index.html">
+<meta property="og:site_name" content="Uncle Qiu">
+<meta property="og:description" content="Zend Guard介绍Zend Guard是一个对PHP代码进行加密的工具。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Zend-Guard-Download.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Zend-Guard-Register.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Trial-Version.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/PHP-Source-Code.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/New-Project.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Add-File-And-Folder.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Security.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Create-Product-License.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Encrypt.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Encrypt-File.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Error.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Dir-Content.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/php.ini.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Zend-Engine.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Zend-Guard-Loader-Ext.png">
+<meta property="og:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Success.png">
+<meta property="og:updated_time" content="2020-06-13T15:55:32.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP代码加密之Zend-Guard使用笔记">
+<meta name="twitter:description" content="Zend Guard介绍Zend Guard是一个对PHP代码进行加密的工具。">
+<meta name="twitter:image" content="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/Zend-Guard-Download.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PHP代码加密之Zend-Guard使用笔记 | Uncle Qiu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Uncle Qiu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">A lazy programmer's blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://uncleqiu.github.io/uncleqiu/2020/06/13/PHP代码加密之Zend-Guard使用笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Uncle Qiu">
+      <meta itemprop="description" content="A lazy programmer's blog">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Uncle Qiu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP代码加密之Zend-Guard使用笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-06-13 23:54:26 / Modified: 23:55:32" itemprop="dateCreated datePublished" datetime="2020-06-13T23:54:26+08:00">2020-06-13</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Zend-Guard介绍"><a href="#Zend-Guard介绍" class="headerlink" title="Zend Guard介绍"></a>Zend Guard介绍</h2><p>Zend Guard是一个对PHP代码进行加密的工具。<a id="more"></a> 是市面上比较成熟可靠的PHP源码加密产品，由Zend公司开发，使用Zend Guard可混淆和保护PHP代码，防止逆向工程和未经授权的使用。使用Zend Guard试用版加密的代码会在14天后过期，所以想要长期使用则需要购买Zend Guard正式许可。</p>
+<p>我所在的公司有做一些商业项目，交付项目时不提供PHP源码，只提供加密后的代码，所以买了许可证。(貌似是5000RMB)，当时老大给了一个<code>zend_guard.zl</code>的授权文件。看了一下文件内容有包含公司名称信息。</p>
+<h2 id="Zend-Guard缺点-待补充"><a href="#Zend-Guard缺点-待补充" class="headerlink" title="Zend Guard缺点(待补充)"></a>Zend Guard缺点(待补充)</h2><ul>
+<li>目前最新版本是Zend Guard7,对php版本的支持最高是php5.6，不支持php7，如果项目使用php7版本的就无法加密了</li>
+<li>仅支持对PHP、inc等文件的加密</li>
+</ul>
+<h2 id="安装Zend-Guard"><a href="#安装Zend-Guard" class="headerlink" title="安装Zend Guard"></a>安装Zend Guard</h2><p>以下我们来安装一下Zend Guard</p>
+<h3 id="1-Zend-Guard下载地址"><a href="#1-Zend-Guard下载地址" class="headerlink" title="1.Zend Guard下载地址"></a>1.Zend Guard下载地址</h3><p><a href="https://www.zend.com/downloads/zend-guard" target="_blank" rel="noopener">Zend Guard下载地址</a></p>
+<p>看下图，我们选择Zend Guard <code>Windows 64位系统的 7版本</code> 的安装包进行下载。下载完成后双击进行下一步下一步傻瓜式安装。</p>
+<p><img src="Zend-Guard-Download.png" alt="Zend Guard选择版本"></p>
+<h3 id="2-注册许可证信息"><a href="#2-注册许可证信息" class="headerlink" title="2.注册许可证信息"></a>2.注册许可证信息</h3><p>下载完成后，我们打开软件是 <code>trial version</code> 也就是试用版的，上面我们提到了，试用版加密的代码是有有效期的，所以我们需要对软件进行许可证注册。</p>
+<p>选择[Help]-&gt;[Register]-&gt;[finish]，如下图：</p>
+<p>①.使用许可证文件<code>zend_guard.zl</code>或者填写许可证内容进行注册</p>
+<p>②.点击<code>Finish</code>完成</p>
+<p><img src="Zend-Guard-Register.png" alt="Zend Guard注册许可证信息"></p>
+<p>点击完成成功之后我们的Zend Guard软件的 <code>trial version</code> 试用版字样消失，到这里我们的Zend Guard就安装并激活完成。</p>
+<p><img src="Trial-Version.png" alt="Zend Guard激活成功"></p>
+<h2 id="Zend-Guard加密PHP源码"><a href="#Zend-Guard加密PHP源码" class="headerlink" title="Zend Guard加密PHP源码"></a>Zend Guard加密PHP源码</h2><p>安装完成后的下一步我们来介绍一下如何使用Zend Guard加密PHP源码文件。</p>
+<h3 id="1-编写测试文件代码"><a href="#1-编写测试文件代码" class="headerlink" title="1.编写测试文件代码"></a>1.编写测试文件代码</h3><p>①.我们创建一个源代码目录 <code>source_code</code> ，然后在目录下创建一个PHP代码测试文件 <code>test.php</code>，如下图：</p>
+<p>②.然后再创建一个加密后的PHP文件存放目录 <code>encrypt_code</code>。</p>
+<p><img src="PHP-Source-Code.png" alt="PHP测试代码"></p>
+<h3 id="2-新建一个项目"><a href="#2-新建一个项目" class="headerlink" title="2.新建一个项目"></a>2.新建一个项目</h3><p>选择[File]-&gt;[New]-&gt;[Zend Guard Project]，然后按照下图操作</p>
+<p><img src="New-Project.png" alt="New Project"><br><img src="Add-File-And-Folder.png" alt="Add File And Folder"></p>
+<h3 id="3-配置产品许可证信息"><a href="#3-配置产品许可证信息" class="headerlink" title="3.配置产品许可证信息"></a>3.配置产品许可证信息</h3><p>①.选择加密项目，点击安全配置</p>
+<p>②.设置加密过期时间</p>
+<p>③.选择证书支持</p>
+<p>操作如下图</p>
+<p><img src="Security.png" alt="Security"></p>
+<p>④.生成产品证书</p>
+<p><img src="Create-Product-License.png" alt="Create Product License"></p>
+<h3 id="4-加密PHP源代码"><a href="#4-加密PHP源代码" class="headerlink" title="4.加密PHP源代码"></a>4.加密PHP源代码</h3><p>点击运行加密文件，查看控制台输出信息</p>
+<p><img src="Encrypt.png" alt="Encrypt"></p>
+<p>我们去加密后的PHP文件存放目录 <code>encrypt_code</code> 查看一下加密后文件的样子，PHP原来的明文代码已经加密成二进制文件了</p>
+<p><img src="Encrypt-File.png" alt="Encrypt File"></p>
+<h3 id="5-运行加密文件"><a href="#5-运行加密文件" class="headerlink" title="5.运行加密文件"></a>5.运行加密文件</h3><p>将加密后的PHP文件部署至服务器然后运行，我们可以看到输出 <code>报错了</code> ，原因是我们没有安装一个叫 <code>Zend Guard Loader</code> 的扩展。</p>
+<p><img src="Error.png" alt="Error"></p>
+<h3 id="6-安装Zend-Guard-Loader扩展"><a href="#6-安装Zend-Guard-Loader扩展" class="headerlink" title="6.安装Zend Guard Loader扩展"></a>6.安装Zend Guard Loader扩展</h3><h4 id="下载Zend-Guard-Loader安装包"><a href="#下载Zend-Guard-Loader安装包" class="headerlink" title="下载Zend Guard Loader安装包"></a>下载Zend Guard Loader安装包</h4><p><a href="https://www.zend.com/downloads/zend-guard-loader" target="_blank" rel="noopener">Zend Guard Loader下载地址</a></p>
+<h4 id="解压文件"><a href="#解压文件" class="headerlink" title="解压文件"></a>解压文件</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 解压文件</span></span><br><span class="line">tar zxvf zend-loader-php5.6-linux-x86_64.tar.gz</span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入目录查看有什么内容</span></span><br><span class="line">cd zend-loader-php5.6-linux-x86_64</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="目录内容如下"><a href="#目录内容如下" class="headerlink" title="目录内容如下"></a>目录内容如下</h4><p><code>opcache.so</code> opcache扩展</p>
+<p><code>README.txt</code> README文件</p>
+<p><code>ZendGuardLoader.so</code> Zend Guard Loader扩展</p>
+<p><img src="Dir-Content.png" alt="Dir Content"></p>
+<p>然后我们把刚刚生成的 <code>encrypt-test.zl</code> 文件上传至服务器</p>
+<h3 id="7-配置php-ini"><a href="#7-配置php-ini" class="headerlink" title="7.配置php.ini"></a>7.配置php.ini</h3><p>接下来修改php.ini文件，修改配置内容如下</p>
+<p><img src="php.ini.png" alt="PHP CONFIG"></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Zend Guard Loader扩展文件路径</span></span><br><span class="line">zend_extension="/usr/local/php5/lib/modules/ZendGuardLoader.so"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 启用 Zend Guard Loader</span></span><br><span class="line">zend_loader.enable=1</span><br><span class="line"><span class="meta">#</span><span class="bash"> 禁用许可证检查</span></span><br><span class="line">zend_loader.disable_licensing=0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置混淆水平</span></span><br><span class="line">zend_loader.obfuscation_level_support=3</span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置授权许可证文件路径</span></span><br><span class="line">zend_loader.license_path=/usr/local/src/encrypt-test.zl</span><br></pre></td></tr></tbody></table></figure>
+<p>配置完成后，需要重启php-fpm，重启完成之后再查看 <code>phpinfo</code></p>
+<p><img src="Zend-Engine.png" alt="Zend Engine"><br><img src="Zend-Guard-Loader-Ext.png" alt="php.ini"></p>
+<p>最后一步，我们继续访问刚才加密后的 <code>test.php</code>文件就可以访问成功啦。</p>
+<p><img src="Success.png" alt="Success"></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/22/算法与数据结构学习笔记/" rel="next" title="算法与数据结构学习笔记">
+                <i class="fa fa-chevron-left"></i> 算法与数据结构学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Uncle Qiu">
+            
+              <p class="site-author-name" itemprop="name">Uncle Qiu</p>
+              <p class="site-description motion-element" itemprop="description">A lazy programmer's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/uncleqiu" title="GitHub &rarr; https://github.com/uncleqiu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:poetuncle@gmail.com" title="E-Mail &rarr; mailto:poetuncle@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Zend-Guard介绍"><span class="nav-number">1.</span> <span class="nav-text">Zend Guard介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zend-Guard缺点-待补充"><span class="nav-number">2.</span> <span class="nav-text">Zend Guard缺点(待补充)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Zend-Guard"><span class="nav-number">3.</span> <span class="nav-text">安装Zend Guard</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Zend-Guard下载地址"><span class="nav-number">3.1.</span> <span class="nav-text">1.Zend Guard下载地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-注册许可证信息"><span class="nav-number">3.2.</span> <span class="nav-text">2.注册许可证信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zend-Guard加密PHP源码"><span class="nav-number">4.</span> <span class="nav-text">Zend Guard加密PHP源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-编写测试文件代码"><span class="nav-number">4.1.</span> <span class="nav-text">1.编写测试文件代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-新建一个项目"><span class="nav-number">4.2.</span> <span class="nav-text">2.新建一个项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-配置产品许可证信息"><span class="nav-number">4.3.</span> <span class="nav-text">3.配置产品许可证信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-加密PHP源代码"><span class="nav-number">4.4.</span> <span class="nav-text">4.加密PHP源代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-运行加密文件"><span class="nav-number">4.5.</span> <span class="nav-text">5.运行加密文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-安装Zend-Guard-Loader扩展"><span class="nav-number">4.6.</span> <span class="nav-text">6.安装Zend Guard Loader扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载Zend-Guard-Loader安装包"><span class="nav-number">4.6.1.</span> <span class="nav-text">下载Zend Guard Loader安装包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解压文件"><span class="nav-number">4.6.2.</span> <span class="nav-text">解压文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目录内容如下"><span class="nav-number">4.6.3.</span> <span class="nav-text">目录内容如下</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-配置php-ini"><span class="nav-number">4.7.</span> <span class="nav-text">7.配置php.ini</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Uncle Qiu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

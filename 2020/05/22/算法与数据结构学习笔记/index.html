@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="Uncle Qiu">
 <meta property="og:description" content="算法与数据结构简单介绍什么是数据结构与算法？">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-23T17:11:06.634Z">
+<meta property="og:updated_time" content="2020-05-24T15:36:26.996Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法与数据结构学习笔记">
 <meta name="twitter:description" content="算法与数据结构简单介绍什么是数据结构与算法？">
@@ -415,7 +415,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-05-24 01:11:06" itemprop="dateModified" datetime="2020-05-24T01:11:06+08:00">2020-05-24</time>
+                <time title="Modified: 2020-05-24 23:36:26" itemprop="dateModified" datetime="2020-05-24T23:36:26+08:00">2020-05-24</time>
               
             
           </span>
@@ -488,6 +488,12 @@
 <p>由上可得按比例来算，相差结果并不大，我们会将<code>常量、低阶、系数</code>进行忽略，只取阶数高的部分，其实<code>2n</code>我们还可以将<code>2</code>进行忽略把它的时间复杂度变成<code>O(n)</code>。总结的话就是<code>总的时间复杂度等于阶数最高的那一部分代码</code>，总结成公式的话就是以下，称为加法规则。</p>
 <p>下面代表如果T1(n) = O(f(n)), T2(n) = O(g(n))，可以转换成下面这样。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">多项相加，只保留最高阶的项，且系数变为1</span><br><span class="line">T(n) = T1(n) + T2(n) = O(f(n)) + O(g(n)) = O(max(f(n), g(n)))</span><br></pre></td></tr></tbody></table></figure>
+<p>除了加法规则还有乘法规则，如果T1(n) = O(f(n))，T2(n) = O(g(n))，那么它总的时间复杂度就是以下</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">多项相乘都保留</span><br><span class="line">T(n) = T1(n) * T2(n) = O(f(n)) * O(g(n)) = O(f(n) * g(n))</span><br></pre></td></tr></tbody></table></figure>
+<p>比如下面嵌套两层循环的代码，他的复杂度就为O(n^2)，嵌套循环代码的复杂度等于外层与内层的乘积。</p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">($n)</span> </span>{</span><br><span class="line">        $sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; $n; $i++) {</span><br><span class="line">            <span class="keyword">for</span> ($j = <span class="number">0</span>; $j &lt; $n; $j++) {</span><br><span class="line">                $sum += ($i + $j);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> $sum;</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
+<p>我们来看下面这段代码，看下他的复杂度是多少</p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">($n)</span> </span>{</span><br><span class="line">        $num = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> ($num &lt; $n) {</span><br><span class="line">            $num *= <span class="number">2</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> $num;</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
 <p>暂时先写到这，后续继续更新。。。。。</p>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -554,6 +560,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/13/PHP代码加密之Zend-Guard使用笔记/" rel="prev" title="PHP代码加密之Zend-Guard使用笔记">
+                PHP代码加密之Zend-Guard使用笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -625,7 +635,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -905,7 +915,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
 
 
 
@@ -939,6 +949,37 @@
   
 
   
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
 
   
   
