@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="xlswriter介绍xlsxwriter 是一个 PHP C 扩展">
+<meta name="keywords" content="PHP,Excel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP扩展xlswriter使用笔记">
+<meta property="og:url" content="https://uncleqiu.github.io/uncleqiu/2020/09/18/PHP扩展xlswriter使用笔记/index.html">
+<meta property="og:site_name" content="Uncle Qiu">
+<meta property="og:description" content="xlswriter介绍xlsxwriter 是一个 PHP C 扩展">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-09-18T13:51:06.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP扩展xlswriter使用笔记">
+<meta name="twitter:description" content="xlswriter介绍xlsxwriter 是一个 PHP C 扩展">
+
+
+
+
+
+
+  <link rel="canonical" href="https://uncleqiu.github.io/uncleqiu/2020/09/18/PHP扩展xlswriter使用笔记/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PHP扩展xlswriter使用笔记 | Uncle Qiu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Uncle Qiu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">A lazy programmer's blog</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://uncleqiu.github.io/uncleqiu/2020/09/18/PHP扩展xlswriter使用笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Uncle Qiu">
+      <meta itemprop="description" content="A lazy programmer's blog">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Uncle Qiu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP扩展xlswriter使用笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-09-18 21:48:12 / Modified: 21:51:06" itemprop="dateCreated datePublished" datetime="2020-09-18T21:48:12+08:00">2020-09-18</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="xlswriter介绍"><a href="#xlswriter介绍" class="headerlink" title="xlswriter介绍"></a>xlswriter介绍</h2><p><code>xlsxwriter</code> 是一个 <code>PHP</code> <code>C</code> 扩展<a id="more"></a>，可用于在<code>Excel 2007</code>及<code>以上版本</code>XLSX文件中写入多个工作表的文本，数字，公式和超链接。</p>
+<p>以下为我使用了一小部分功能感觉的优缺点：</p>
+<p>优点</p>
+<ul>
+<li>内存使用量较小，导出时可使用固定内存模式</li>
+<li>写入/读取性能高</li>
+<li>支持数字，公式和超链接</li>
+<li>支持基本的单元格样式</li>
+<li>支持创建多个子表格</li>
+<li>支持导出超过<code>10万</code>行的大表格</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>仅支持 <code>Office 2007+</code> xlsx格式的Excel表，不支持<code>2003版本</code>xls格式</li>
+<li>仅支持简单的基本功能，功能没有PHPExcel丰富</li>
+<li>设置单元格格式等方法较为复杂难用</li>
+<li>不支持对已存在的文件追加写入<code>(不支持修改文件)</code>，只能创建新文件进行写入，已在的文件会覆盖</li>
+</ul>
+<h2 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h2><p>PHP 版本大于等于 <code>7.0</code></p>
+<h2 id="项目相关地址"><a href="#项目相关地址" class="headerlink" title="项目相关地址"></a>项目相关地址</h2><p><a href="https://pecl.php.net/package/xlswriter" target="_blank" rel="noopener">xlswriter 下载地址</a></p>
+<p><a href="https://github.com/viest/php-ext-xlswriter" target="_blank" rel="noopener">xlswriter github地址</a></p>
+<p><a href="https://gitee.com/viest/php-ext-xlswriter" target="_blank" rel="noopener">xlswriter gitee地址</a></p>
+<p><a href="https://xlswriter-docs.viest.me" target="_blank" rel="noopener">xlswriter 文档地址</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 下载安装包，这里选择最新稳定版本1.3.6</span></span><br><span class="line">wget https://pecl.php.net/get/xlswriter-1.3.6.tgz</span><br><span class="line"><span class="meta">#</span><span class="bash"> 解压</span></span><br><span class="line">tar -zxvf xlswriter-1.3.6.tgz</span><br><span class="line"><span class="meta">#</span><span class="bash"> 编译</span></span><br><span class="line">cd xlswriter-1.3.6</span><br><span class="line">/usr/local/php72/bin/phpize</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如需要读取文件，需要加 --<span class="built_in">enable</span>-reader 编译参数</span></span><br><span class="line">./configure --with-php-config=/usr/local/php72/bin/php-config --enable-reader</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置php.ini</span></span><br><span class="line">echo "extension=/usr/local/php72/lib/php/extensions/no-debug-non-zts-20170718/xlswriter.so" &gt;&gt; /usr/local/php72/lib/php.ini</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看PHP扩展是否配置成功</span></span><br><span class="line">php72 -m | grep xlswriter</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="主要使用方法及参数解释"><a href="#主要使用方法及参数解释" class="headerlink" title="主要使用方法及参数解释"></a>主要使用方法及参数解释</h2><p>以下是我使用过的一些方法，所有可使用方法请查看ide-helper</p>
+<p><a href="https://gitee.com/viest/php-ext-xlswriter/blob/master/ide-helper/helper.php" target="_blank" rel="noopener">ide-helper</a></p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 构造函数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array $config 可传入文件目录地址等参数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(array $config)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 传入Excel文件名及工作表名并返回其文件实例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $fileName 文件名称</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $sheetName 工作表名称</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> Excel 返回Excel实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">fileName</span><span class="params">(string $fileName, string $sheetName = <span class="string">'Sheet1'</span>)</span>: <span class="title">self</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在工作表的第一行插入数据</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array $header</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> Excel</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">header</span><span class="params">(array $header)</span>: <span class="title">self</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在工作表上插入数据</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array $data 数据数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> Excel</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">data</span><span class="params">(array $data)</span>: <span class="title">self</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生成文件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">output</span><span class="params">()</span>: <span class="title">string</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'FilePath'</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 合并单元格</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $range 合并单元格范围，例：A1:C2</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $data 合并单元格的值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> Excel</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">MergeCells</span><span class="params">(string $range, string $data)</span>: <span class="title">self</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在Excel文件中添加一个新的工作表</span></span><br><span class="line"><span class="comment"> * 工作表名称必须是有效的Excel工作表名称，</span></span><br><span class="line"><span class="comment"> * 必须少于32个字符，并且不能包含任何字符：/ \ [ ] : * ?</span></span><br><span class="line"><span class="comment"> * 此外，不能对多个工作表使用相同的、不区分大小写的“$sheetName”。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string|NULL $sheetName 工作表名称</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> Excel</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">addSheet</span><span class="params">(?string $sheetName)</span>: <span class="title">self</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 切换工作表</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $sheetName 工作表名称</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> Excel</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">checkoutSheet</span><span class="params">(string $sheetName)</span>: <span class="title">self</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在单元格上插入数据</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> int               $row  单元格所在行 从0开始(第一行传0)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> int               $column 单元格所在列 从0开始(第一列为0，A列传0)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> int|string|double $data 单元格需要写入的数据</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string|null       $format 内容格式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> resource|null     $formatHandle 单元格样式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> Excel</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">insertText</span><span class="params">(int $row, int $column, $data, string $format = NULL, $formatHandle = NULL)</span>: <span class="title">self</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 辅助函数</span></span><br><span class="line"><span class="comment"> * 数字转字符</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">var_dump(\Vtiful\Kernel\Excel::stringFromColumnIndex(<span class="number">0</span>));  <span class="comment">// A</span></span><br><span class="line">var_dump(\Vtiful\Kernel\Excel::stringFromColumnIndex(<span class="number">28</span>)); <span class="comment">// AC</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 辅助函数</span></span><br><span class="line"><span class="comment"> * 字符转数字</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">var_dump(\Vtiful\Kernel\Excel::columnIndexFromString(<span class="string">'A'</span>));  <span class="comment">// 0</span></span><br><span class="line">var_dump(\Vtiful\Kernel\Excel::columnIndexFromString(<span class="string">'AC'</span>)); <span class="comment">// 28</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><h3 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h3><figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 指定导出文件路径</span></span><br><span class="line">$config = [<span class="string">'path'</span> =&gt; <span class="string">'/home/test'</span>];</span><br><span class="line">$excel  = <span class="keyword">new</span> \Vtiful\Kernel\Excel($config);</span><br><span class="line"><span class="comment">// fileName 会自动创建一个工作表，你可以自定义该工作表名称，工作表名称为可选参数</span></span><br><span class="line">$filePath = $excel-&gt;fileName(<span class="string">'test.xlsx'</span>, <span class="string">'sheet1'</span>)</span><br><span class="line">    -&gt;header([<span class="string">'Item'</span>, <span class="string">'Cost'</span>])</span><br><span class="line">    -&gt;data([</span><br><span class="line">        [<span class="string">'Rent'</span>, <span class="number">1000</span>],</span><br><span class="line">        [<span class="string">'Gas'</span>,  <span class="number">100</span>],</span><br><span class="line">        [<span class="string">'Food'</span>, <span class="number">300</span>],</span><br><span class="line">        [<span class="string">'Gym'</span>,  <span class="number">50</span>],</span><br><span class="line">    ])</span><br><span class="line">    -&gt;output();</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="读取Excel内容"><a href="#读取Excel内容" class="headerlink" title="读取Excel内容"></a>读取Excel内容</h3><figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$config   = [<span class="string">'path'</span> =&gt; <span class="string">'./tests'</span>];</span><br><span class="line">$excel    = <span class="keyword">new</span> \Vtiful\Kernel\Excel($config);</span><br><span class="line"><span class="comment">// 导出测试文件</span></span><br><span class="line">$filePath = $excel-&gt;fileName(<span class="string">'tutorial.xlsx'</span>)</span><br><span class="line">    -&gt;header([<span class="string">'Item'</span>, <span class="string">'Cost'</span>])</span><br><span class="line">    -&gt;output();</span><br><span class="line"><span class="comment">// 读取测试文件</span></span><br><span class="line">$data = $excel-&gt;openFile(<span class="string">'tutorial.xlsx'</span>)</span><br><span class="line">    -&gt;openSheet()</span><br><span class="line">    -&gt;getSheetData();</span><br><span class="line">var_dump($data); <span class="comment">// [['Item', 'Cost']]</span></span><br></pre></td></tr></tbody></table></figure>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+            <a href="/tags/Excel/" rel="tag"># Excel</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/25/PHP-Excel插件之PHP-XLSXWriter使用笔记/" rel="next" title="PHP Excel插件之PHP_XLSXWriter使用笔记">
+                <i class="fa fa-chevron-left"></i> PHP Excel插件之PHP_XLSXWriter使用笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Uncle Qiu">
+            
+              <p class="site-author-name" itemprop="name">Uncle Qiu</p>
+              <p class="site-description motion-element" itemprop="description">A lazy programmer's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/uncleqiu" title="GitHub &rarr; https://github.com/uncleqiu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:poetuncle@gmail.com" title="E-Mail &rarr; mailto:poetuncle@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#xlswriter介绍"><span class="nav-number">1.</span> <span class="nav-text">xlswriter介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境要求"><span class="nav-number">2.</span> <span class="nav-text">环境要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目相关地址"><span class="nav-number">3.</span> <span class="nav-text">项目相关地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">4.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主要使用方法及参数解释"><span class="nav-number">5.</span> <span class="nav-text">主要使用方法及参数解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单使用"><span class="nav-number">6.</span> <span class="nav-text">简单使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导出"><span class="nav-number">6.1.</span> <span class="nav-text">导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取Excel内容"><span class="nav-number">6.2.</span> <span class="nav-text">读取Excel内容</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Uncle Qiu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
